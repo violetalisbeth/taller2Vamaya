@@ -1,4 +1,4 @@
-package com.pdmtaller2_00007515_VioletaAmaya.ui.components
+package com.pdmtaller2_00007515_VioletaAmaya.ui.Components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,14 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun search(searchQuery: MutableState<String>) {
+fun search(searchQuery: MutableState<String> ){
     OutlinedTextField(
         value = searchQuery.value,
         onValueChange = { searchQuery.value = it },
         label = { Text("Buscar platillo") },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Search,
+                Icons.Default.Search,
                 contentDescription = "Buscar"
             )
         },

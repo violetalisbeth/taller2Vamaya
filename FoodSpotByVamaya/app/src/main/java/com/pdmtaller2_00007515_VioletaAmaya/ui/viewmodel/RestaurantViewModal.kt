@@ -1,4 +1,4 @@
-package com.pdmtaller2_00007515_VioletaAmaya.viewmodel
+package com.pdmtaller2_00007515_VioletaAmaya.ui.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf

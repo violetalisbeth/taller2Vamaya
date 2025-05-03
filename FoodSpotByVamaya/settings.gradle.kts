@@ -19,7 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FoodSpot By Vamaya"
-include(":app")
+rootProject.name = "Food Spot By VAmaya"
 include(":app")
  

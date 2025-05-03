@@ -1,73 +1,59 @@
-package com.pdmtaller2_00007515_VioletaAmaya.ui.components
+package com.pdmtaller2_00007515_VioletaAmaya.ui.Components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.pdmtaller2_00007515_VioletaAmaya.Navigation.Screen
+
+// Definir el color pistacho
+val PistachioGreen = Color(0xFF93C572)
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-    val pistachioColor = Color(0xFF98FF98)
-
-    Surface(
-        color = pistachioColor,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
+    BottomAppBar(
+        containerColor = PistachioGreen,
+        tonalElevation = 4.dp
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(
-                onClick = { /* TODO */ },
-                colors = ButtonDefaults.buttonColors(containerColor = pistachioColor),
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 4.dp)
-                    .height(50.dp)
-            ) {
-                Text("Listado", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.Black)
+            NavigationButton("Restaurantes") {
+                navController.navigate(Screen.Category.route)
             }
 
-            Button(
-                onClick = { /* TODO */ },
-                colors = ButtonDefaults.buttonColors(containerColor = pistachioColor),
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 4.dp)
-                    .height(50.dp)
-            ) {
-                Text("Buscar", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.Black)
+            NavigationButton("Buscar") {
+                navController.navigate(Screen.searchAll.route)
             }
 
-            Button(
-                onClick = { /* TODO */ },
-                colors = ButtonDefaults.buttonColors(containerColor = pistachioColor),
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 4.dp)
-                    .height(50.dp)
-            ) {
-                Text("Mis Órdenes", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.Black)
+            NavigationButton("Mis ordenes") {
+                navController.navigate(Screen.MyOrder.route)
             }
         }
+    }
+}
+
+@Composable
+fun NavigationButton(text: String, onClick: () -> Unit) {
+    TextButton(onClick = onClick) {
+        Text(
+            text = text,
+            fontWeight = FontWeight.Medium,
+            fontSize = 16.sp,
+            color = Color.White // Puedes cambiarlo a Color.Black si no hay buen contraste
+        )
     }
 }

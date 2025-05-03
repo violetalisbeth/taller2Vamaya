@@ -1,5 +1,6 @@
-package com.pdmtaller2_00007515_VioletaAmaya.ui.components
+package com.pdmtaller2_00007515_VioletaAmaya.ui.Components
 
+import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

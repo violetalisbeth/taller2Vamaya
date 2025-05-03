@@ -1,8 +1,5 @@
 package com.pdmtaller2_00007515_VioletaAmaya.ui.screens
 
-
-
-import android.annotation.SuppressLint
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,10 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import com.pdmtaller2_00007515_VioletaAmaya.ui.components.BottomNavigationBar
+import com.pdmtaller2_00007515_VioletaAmaya.ui.Components.BottomNavigationBar
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun SearchAll(navController: NavController){
@@ -39,6 +34,6 @@ fun SearchAll(navController: NavController){
             )
         },
         content = {},
-        bottomBar = { BottomNavigationBar(navController as NavHostController)}
+        bottomBar = { BottomNavigationBar(navController)}
     )
 }

@@ -3,12 +3,24 @@ package com.pdmtaller2_00007515_VioletaAmaya.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -20,53 +32,65 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.pdmtaller2_00007515_VioletaAmaya.Navigation.Screen
-import com.pdmtaller2_00007515_VioletaAmaya.ui.components.BottomNavigationBar
-import com.pdmtaller2_00007515_VioletaAmaya.viewmodel.RestaurantViewModel
+import com.pdmtaller2_00007515_VioletaAmaya.ui.Components.BottomNavigationBar
+import com.pdmtaller2_00007515_VioletaAmaya.ui.viewmodel.RestaurantViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryScreen(navController: NavHostController, viewModel: RestaurantViewModel) {
-    val categoriesMap = viewModel.restaurantsByCategory.collectAsState().value
+    val categories = viewModel.restaurantsByCategory.collectAsState().value
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        "FoodSpot",
+                        text = "🍽️ FoodSpot",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontFamily = FontFamily.SansSerif,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF571E0D)
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 24.sp,
+                            color = Color.Black
                         )
                     )
-                }
+                },
+                modifier = Modifier.background(Color(0xFF812B12))
             )
         },
         content = { paddingValues ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues),
+                    .padding(paddingValues)
+                    .background(Color(0xFFF9F5F2)),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp)
+                        .padding(12.dp)
                 ) {
-                    categoriesMap.forEach { (category, restaurants) ->
+                    categories.forEach { (category, restaurants) ->
                         item {
                             Text(
                                 text = category,
-                                modifier = Modifier.padding(vertical = 8.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 12.dp)
+                                    .background(
+                                        color = Color(0xFFFAE1DC),
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                    .padding(8.dp),
                                 fontSize = 20.sp,
-                                fontWeight = FontWeight.Medium,
+                                fontWeight = FontWeight.Bold,
                                 color = Color(0xFF812B12)
                             )
                         }
@@ -75,41 +99,41 @@ fun CategoryScreen(navController: NavHostController, viewModel: RestaurantViewMo
                             LazyRow(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(8.dp)
-                                    .clip(RoundedCornerShape(25.dp))
-                                    .background(Color(0xFFE1DFDF)),
-                                horizontalArrangement = Arrangement.Center
+                                    .padding(bottom = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
                                 items(restaurants) { restaurant ->
                                     Card(
                                         modifier = Modifier
-                                            .padding(10.dp)
+                                            .size(width = 160.dp, height = 200.dp)
                                             .clickable {
-                                                navController.navigate(
-                                                    Screen.Restaurant.createRoute(restaurant.id)
-                                                )
+                                                navController.navigate(Screen.Restaurant.createRoute(restaurant.id))
                                             },
-                                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5C9B9))
+                                        shape = RoundedCornerShape(16.dp),
+                                        elevation = CardDefaults.cardElevation(8.dp),
+                                        colors = CardDefaults.cardColors(containerColor = Color.White)
                                     ) {
                                         Column(
-                                            modifier = Modifier
-                                                .padding(8.dp)
-                                                .fillMaxWidth(),
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            verticalArrangement = Arrangement.Top,
+                                            modifier = Modifier.padding(8.dp)
                                         ) {
                                             Image(
                                                 painter = painterResource(id = restaurant.imageUrl),
                                                 contentDescription = "Imagen del Restaurante",
                                                 modifier = Modifier
-                                                    .size(100.dp)
-                                                    .padding(bottom = 8.dp),
-                                                contentScale = ContentScale.Fit
+                                                    .size(120.dp)
+                                                    .clip(RoundedCornerShape(12.dp)),
+                                                contentScale = ContentScale.Crop
                                             )
                                             Text(
                                                 text = restaurant.name,
-                                                style = MaterialTheme.typography.bodyLarge,
+                                                style = MaterialTheme.typography.bodyLarge.copy(
+                                                    fontWeight = FontWeight.SemiBold
+                                                ),
                                                 maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis
+                                                overflow = TextOverflow.Ellipsis,
+                                                modifier = Modifier.padding(top = 8.dp)
                                             )
                                         }
                                     }

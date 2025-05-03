@@ -1,46 +1,31 @@
 package com.pdmtaller2_00007515_VioletaAmaya.Navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.compose.*
+import androidx.navigation.compose.rememberNavController
 import com.pdmtaller2_00007515_VioletaAmaya.ui.screens.CartScreen
 import com.pdmtaller2_00007515_VioletaAmaya.ui.screens.CategoryScreen
 import com.pdmtaller2_00007515_VioletaAmaya.ui.screens.RestaurantScreen
 import com.pdmtaller2_00007515_VioletaAmaya.ui.screens.SearchAll
-import com.pdmtaller2_00007515_VioletaAmaya.viewmodel.RestaurantViewModel
+import com.pdmtaller2_00007515_VioletaAmaya.ui.viewmodel.RestaurantViewModel
 
 @Composable
-fun Navigate(navController: NavController, modifier: Modifier) {
-    val restaurantViewModel: RestaurantViewModel = viewModel()
-
-    NavHost(
-        navController = navController as NavHostController,
-        startDestination = "categories"
-    ) {
+fun Navigate() {
+    val navController = rememberNavController()
+    val restaurantViewModel: RestaurantViewModel = RestaurantViewModel()
+    NavHost(navController = navController, startDestination = "categories") {
         composable("categories") {
-            CategoryScreen(navController, restaurantViewModel)
+            CategoryScreen(navController, RestaurantViewModel())
         }
         composable("restaurant/{restaurantId}") { backStackEntry ->
-            val restaurantIdString = backStackEntry.arguments?.getString("restaurantId")
-            val restaurantId = restaurantIdString?.toIntOrNull()
-
-            if (restaurantId != null) {
-                val restaurant = restaurantViewModel.getRestaurantById(restaurantId)
-                if (restaurant != null) {
-                    RestaurantScreen(navController, restaurantId, restaurantViewModel)
-                } else {
-                    Text("Restaurante no encontrado")
-                }
-            } else {
-                Text("ID de restaurante no válido")
-            }
+            val restaurantId = backStackEntry.arguments?.getString("restaurantId")?.toInt() ?: 0
+            RestaurantScreen(
+                navController,
+                restaurantId,
+                restaurantViewModel
+            )
         }
-        composable("myorders") {
+        composable("myorders"){
             CartScreen(restaurantViewModel, navController)
         }
         composable("searchall") {
@@ -48,4 +33,3 @@ fun Navigate(navController: NavController, modifier: Modifier) {
         }
     }
 }
-
