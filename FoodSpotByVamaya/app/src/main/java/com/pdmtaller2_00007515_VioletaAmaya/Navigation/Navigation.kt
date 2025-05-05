@@ -13,9 +13,10 @@ import com.pdmtaller2_00007515_VioletaAmaya.ui.viewmodel.RestaurantViewModel
 fun Navigate() {
     val navController = rememberNavController()
     val restaurantViewModel: RestaurantViewModel = RestaurantViewModel()
+
     NavHost(navController = navController, startDestination = "categories") {
         composable("categories") {
-            CategoryScreen(navController, RestaurantViewModel())
+            CategoryScreen(navController, restaurantViewModel)
         }
         composable("restaurant/{restaurantId}") { backStackEntry ->
             val restaurantId = backStackEntry.arguments?.getString("restaurantId")?.toInt() ?: 0
@@ -29,7 +30,8 @@ fun Navigate() {
             CartScreen(restaurantViewModel, navController)
         }
         composable("searchall") {
-            SearchAll(navController)
+            SearchAll(navController, restaurantViewModel)
         }
     }
 }
+
