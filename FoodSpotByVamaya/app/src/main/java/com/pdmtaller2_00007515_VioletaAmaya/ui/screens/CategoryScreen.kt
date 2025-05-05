@@ -119,7 +119,7 @@ fun CategoryScreen(navController: NavHostController, viewModel: RestaurantViewMo
                                             modifier = Modifier.padding(8.dp)
                                         ) {
                                             Image(
-                                                painter = painterResource(id = restaurant.imageUrl),
+                                                painter = painterResource(id = restaurant.imageResId),
                                                 contentDescription = "Imagen del Restaurante",
                                                 modifier = Modifier
                                                     .size(120.dp)

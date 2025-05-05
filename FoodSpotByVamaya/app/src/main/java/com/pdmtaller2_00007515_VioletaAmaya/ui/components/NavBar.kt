@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.pdmtaller2_00007515_VioletaAmaya.Navigation.Screen
 
-// Definir el color pistacho
+
 val PistachioGreen = Color(0xFF93C572)
 
 @Composable
@@ -53,7 +53,7 @@ fun NavigationButton(text: String, onClick: () -> Unit) {
             text = text,
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
-            color = Color.White // Puedes cambiarlo a Color.Black si no hay buen contraste
+            color = Color.White
         )
     }
 }

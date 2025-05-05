@@ -1,16 +1,22 @@
 package com.pdmtaller2_00007515_VioletaAmaya.ui.screens
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -63,28 +69,62 @@ fun SearchAll(navController: NavController, restaurantViewModel: RestaurantViewM
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 4.dp)
+                                    .padding(vertical = 6.dp)
                                     .clickable {
                                         navController.navigate("restaurant/${restaurant.id}")
                                     },
-                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                                shape = RoundedCornerShape(12.dp)
                             ) {
-                                Column(modifier = Modifier.padding(16.dp)) {
-                                    Text(
-                                        text = restaurant.name,
-                                        style = MaterialTheme.typography.titleMedium.copy(
-                                            fontFamily = FontFamily.SansSerif,
-                                            fontWeight = FontWeight.Bold
-                                        ),
-                                        color = Color(0xFF571E0D)
+                                Row(modifier = Modifier.padding(12.dp)) {
+                                    Image(
+                                        painter = painterResource(id = restaurant.imageResId),
+                                        contentDescription = restaurant.name,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .size(80.dp)
+                                            .clip(RoundedCornerShape(8.dp))
                                     )
-                                    Spacer(modifier = Modifier.height(4.dp))
-                                    Text(
-                                        text = restaurant.description,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        maxLines = 2,
-                                        color = Color.DarkGray
-                                    )
+
+                                    Spacer(modifier = Modifier.width(12.dp))
+
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text(
+                                            text = restaurant.name,
+                                            style = MaterialTheme.typography.titleMedium.copy(
+                                                fontFamily = FontFamily.SansSerif,
+                                                fontWeight = FontWeight.Bold
+                                            ),
+                                            color = Color(0xFF571E0D)
+                                        )
+                                        Spacer(modifier = Modifier.height(4.dp))
+
+                                        Text(
+                                            text = restaurant.description,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            maxLines = 2,
+                                            color = Color.DarkGray
+                                        )
+
+                                        Spacer(modifier = Modifier.height(6.dp))
+
+                                        Row {
+                                            restaurant.categories.take(2).forEach { category ->
+                                                Text(
+                                                    text = category,
+                                                    style = MaterialTheme.typography.labelSmall,
+                                                    color = Color.White,
+                                                    modifier = Modifier
+                                                        .background(
+                                                            color = Color(0xFF8B4513),
+                                                            shape = RoundedCornerShape(8.dp)
+                                                        )
+                                                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                                                        .padding(end = 6.dp)
+                                                )
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
