@@ -22,14 +22,14 @@ val allRestaurant = listOf(
         3, "La Champurrada", "Sabor mexicano tradicional", R.drawable.la_champurrada, listOf("comida mexicana", "moles"),
         listOf(
             Dish(5,"Chilaquiles Rojos", "Tortillas bañadas en salsa roja", "https://i.blogs.es/61034c/chilaquiles-rojos-chile-morita-1-/1366_2000.jpg"),
-            Dish(8, "Mole Poblano", "Base de maíz con pollo y crema", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUSAXcwFuubomIkmU6zicIHCFOE52SdSN2WA&s")
+            Dish(6, "Mole Poblano", "Base de maíz con pollo y crema", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUSAXcwFuubomIkmU6zicIHCFOE52SdSN2WA&s")
         )
     ),
     Restaurant(
-        3, "El BurritoDShrek", "Tacos y comida urbana mexicana", R.drawable.el_burritodshrek, listOf("comida mexicana", "burritos"),
+        4, "El BurritoDShrek", "Tacos y comida urbana mexicana", R.drawable.el_burritodshrek, listOf("comida mexicana", "burritos"),
         listOf(
-            Dish(5, "Tacos de Barbacoa", "Carne de res suave con salsas", "https://www.carniceriademadrid.es/wp-content/uploads/2021/06/jeswin-thomas-z_PfaGzeN9E-unsplash-1.jpg"),
-            Dish(6, "Burrito Norteño", "Carne asada, frijoles y guacamole", "https://i.blogs.es/1cec53/como-hacer-burritos-de-carne-1-/650_1200.jpg")
+            Dish(7, "Tacos de Barbacoa", "Carne de res suave con salsas", "https://www.carniceriademadrid.es/wp-content/uploads/2021/06/jeswin-thomas-z_PfaGzeN9E-unsplash-1.jpg"),
+            Dish(8, "Burrito Norteño", "Carne asada, frijoles y guacamole", "https://i.blogs.es/1cec53/como-hacer-burritos-de-carne-1-/650_1200.jpg")
         )
     ),
     Restaurant(

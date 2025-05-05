@@ -39,7 +39,7 @@ fun BottomNavigationBar(navController: NavController) {
                 navController.navigate(Screen.searchAll.route)
             }
 
-            NavigationButton("Mis ordenes") {
+            NavigationButton("Mis Órdenes") {
                 navController.navigate(Screen.MyOrder.route)
             }
         }
