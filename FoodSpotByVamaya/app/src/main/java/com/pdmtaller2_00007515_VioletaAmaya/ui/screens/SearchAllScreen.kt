@@ -1,6 +1,5 @@
 package com.pdmtaller2_00007515_VioletaAmaya.ui.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,94 +15,81 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
-import com.pdmtaller2_00007515_VioletaAmaya.ui.Components.BottomNavigationBar
 import com.pdmtaller2_00007515_VioletaAmaya.ui.viewmodel.RestaurantViewModel
-import com.pdmtaller2_00007515_VioletaAmaya.data.model.Restaurant
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchAll(navController: NavController, restaurantViewModel: RestaurantViewModel) {
     var searchQuery by remember { mutableStateOf("") }
-
-    val allRestaurants = restaurantViewModel.restaurantsByCategory.value.values.flatten()
-
-    val filteredRestaurants = allRestaurants.filter { restaurant ->
-        restaurant.name.contains(searchQuery, ignoreCase = true) ||
-                restaurant.categories.any { it.contains(searchQuery, ignoreCase = true) }
+    val searchResults = remember(searchQuery) {
+        if (searchQuery.isBlank()) {
+            emptyList()
+        } else {
+            restaurantViewModel.searchRestaurants(searchQuery)
+        }
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Buscar Restaurante") },
+                title = { Text("Buscar Restaurantes", fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver", tint = Color(0xFF812B12))
+                        Icon(Icons.Default.ArrowBack, contentDescription = "volver", tint = Color(0xFF812B12))
                     }
                 }
             )
-        },
-        bottomBar = { BottomNavigationBar(navController) }
+        }
     ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp)
-        ) {
-            // Buscador
+        Column(modifier = Modifier
+            .padding(paddingValues)
+            .padding(16.dp)) {
+
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Buscar por nombre o categoría") },
+                label = { Text("Buscar por nombre, categoría o platillo") },
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            LazyColumn {
-                items(filteredRestaurants) { restaurant ->
-                    RestaurantCard(restaurant = restaurant, onClick = {
-                        navController.navigate("restaurantScreen/${restaurant.id}")
-                    })
+            if (searchQuery.isNotBlank()) {
+                if (searchResults.isEmpty()) {
+                    Text("No se encontraron resultados.", color = Color.Gray)
+                } else {
+                    LazyColumn {
+                        items(searchResults) { restaurant ->
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                                    .clickable {
+                                        navController.navigate("restaurant/${restaurant.id}")
+                                    },
+                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                            ) {
+                                Column(modifier = Modifier.padding(16.dp)) {
+                                    Text(
+                                        text = restaurant.name,
+                                        style = MaterialTheme.typography.titleMedium.copy(
+                                            fontFamily = FontFamily.SansSerif,
+                                            fontWeight = FontWeight.Bold
+                                        ),
+                                        color = Color(0xFF571E0D)
+                                    )
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text(
+                                        text = restaurant.description,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        maxLines = 2,
+                                        color = Color.DarkGray
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun RestaurantCard(restaurant: Restaurant, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Image(
-                painter = rememberAsyncImagePainter(restaurant.imageUrl),
-                contentDescription = restaurant.name,
-                modifier = Modifier.size(80.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text(
-                    text = restaurant.name,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontFamily = FontFamily.SansSerif,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-                Text(
-                    text = restaurant.description,
-                    style = MaterialTheme.typography.bodySmall
-                )
             }
         }
     }

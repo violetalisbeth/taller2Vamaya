@@ -62,4 +62,16 @@ class RestaurantViewModel : ViewModel() {
         _orderHistoryId.add(dish.id)
         _orderHistoryStateFlow.value= _orderHistoryId.toList()
     }
+    fun searchRestaurants(query: String): List<Restaurant> {
+        val normalizedQuery = query.trim().lowercase()
+
+        return _allRestaurants.filter { restaurant ->
+            val nameMatches = restaurant.name.lowercase().contains(normalizedQuery)
+            val categoryMatches = restaurant.categories.any { it.lowercase().contains(normalizedQuery) }
+            val dishMatches = restaurant.menu.any { it.name.lowercase().contains(normalizedQuery) }
+
+            nameMatches || categoryMatches || dishMatches
+        }
+    }
+
 }
